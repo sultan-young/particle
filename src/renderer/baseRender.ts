@@ -1,8 +1,8 @@
+import { BaseBehaviour } from "../behaviour/base";
 import { Parcicle } from "../particles";
 
 export interface IBaseInitializeOptions {
     skip?: number;
-    shakeEnable?: boolean;
     color?: string;
     radius?: number;
     animateEnabled?: boolean;
@@ -19,12 +19,19 @@ export abstract class Render {
     protected y = 0;
     protected particles : Array<Parcicle> = [];
     public animateEnabled = false;
+    
+    // 当前粒子行为
+    private behaviours : Array<BaseBehaviour> = [];
 
     constructor() {
 
     }
     abstract addInitialize(options: any): void;
     abstract initCanvasData(canvas: HTMLCanvasElement): void;
+
+    addBehaviour(behaviour: BaseBehaviour) {
+        this.behaviours.push(behaviour);
+    }
 
     _initCanvasData(canvas: HTMLCanvasElement) {
         const ctx = canvas.getContext('2d');
@@ -42,10 +49,8 @@ export abstract class Render {
                 const a = imgData[pointIndex + 3];
                 if (a > 0) {
                     this.particles.push(new Parcicle({
-                        finalX: x,
-                        finalY: y,
-                        x: Math.floor(Math.random() * canvas.width),
-                        y: Math.floor(Math.random() * canvas.height),
+                        x,
+                        y,
                         radius: this.radius,
                         shakeEnable: this.shakeEnable,
                         color: this.color || `rgba(${r}, ${g}, ${b}, ${a})`,
@@ -58,6 +63,9 @@ export abstract class Render {
     }
     
     render(ctx: CanvasRenderingContext2D, timeChunk?: number) {
+        this.behaviours.forEach(item => {
+            item.update(this.particles);
+        })
         this.particles.forEach(item => {
             if (this.animateEnabled && timeChunk) {
                 item.update(timeChunk);

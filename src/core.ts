@@ -1,3 +1,4 @@
+import { BaseBehaviour } from './behaviour/base';
 import { Render } from './renderer/baseRender';
 import { ImgRenderer } from './renderer/imgRenderer';
 import { TextRenderer } from './renderer/textRenderer';
@@ -12,11 +13,9 @@ class Particle {
     private offScreenCanvas !: HTMLCanvasElement;
     private offScreenCanvasCtx !: CanvasRenderingContext2D;
 
-
-    // 上次绘制的时间戳
-    private lastTimeStamp = 0;
     // 渲染器
     private renderer !: Render;
+
 
     static TextRenderer = TextRenderer;
     static ImgRenderer = ImgRenderer;

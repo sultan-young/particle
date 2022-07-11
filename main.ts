@@ -1,3 +1,6 @@
+import { ShakeBehaviour } from "./src/behaviour/shake";
+import { SpreadBehaviour } from "./src/behaviour/spread";
+import { WriggleBehaviour } from "./src/behaviour/wriggle";
 import Particle, { Emiter } from "./src/core";
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
@@ -14,14 +17,17 @@ if (canvas) {
     textRender.addInitialize({
         skip: 2,
         color: 'red',
-        shakeEnable: true,
         radius: 1,
         animateEnabled: true,
         fontSize: '50px',
         x: 100,
         y: 100,
     })
+    // textRender.addBehaviour(new ShakeBehaviour(1));
+    // textRender.addBehaviour(new WriggleBehaviour());
+    textRender.addBehaviour(new SpreadBehaviour())
     particleManager.addRenderer(textRender);
+
     particleManager.render();
 
     // const img = document.createElement('img') as HTMLImageElement;
@@ -31,12 +37,12 @@ if (canvas) {
     // img.onload = () => {
     //     const particleManager = new Particle(canvas);
     //     const imgRender = new Particle.ImgRenderer(img);
+    //     imgRender.addBehaviour(new WriggleBehaviour());
     //     imgRender.addInitialize({
     //         width: WIDTH,
     //         height: HEIGHT,
     //         skip: 5,
     //         // color: '#2EA9DF',
-    //         shakeEnable: true,
     //         radius: 1,
     //         animateEnabled: true,
     //     })
