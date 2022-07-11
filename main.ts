@@ -37,8 +37,9 @@ if (canvas) {
     img.onload = () => {
         const particleManager = new Particle(canvas);
         const imgRender = new Particle.ImgRenderer(img);
-        imgRender.addBehaviour(new WriggleBehaviour());
-        imgRender.addBehaviour(new ShakeBehaviour(1));
+        // imgRender.addBehaviour(new WriggleBehaviour());
+        // imgRender.addBehaviour(new ShakeBehaviour(1));
+        imgRender.addBehaviour(new SpreadBehaviour(SpreadBehaviour.BehaviourEunm.toTop));
         imgRender.addInitialize({
             width: WIDTH,
             height: HEIGHT,

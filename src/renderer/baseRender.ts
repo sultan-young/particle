@@ -59,7 +59,6 @@ export abstract class Render {
             }
         };
         ctx.clearRect(0, 0, width, height); 
-        console.log(this.particles)
     }
     
     render(ctx: CanvasRenderingContext2D, timeChunk?: number) {

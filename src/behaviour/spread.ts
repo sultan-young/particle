@@ -7,20 +7,26 @@ import { BaseBehaviour } from "./base";
 
 
 enum BehaviourEunm {
-    
+    toTop,
+    toBottom,
+    toLeft,
+    toRight,
+    toAround,
 }
 export class SpreadBehaviour extends BaseBehaviour{
-    
+    static BehaviourEunm = BehaviourEunm;
+    behaviourType = BehaviourEunm.toAround;
 
-    constructor() {
+    constructor(behaviourType: BehaviourEunm) {
         super();
-        this.init()
-    }
-    init() {
-
+        this.behaviourType = behaviourType;
     }
     update(particles: Parcicle[]): void {
         particles.forEach(item => {
+            this.toTop();
         });
+    }
+    toTop() {
+        
     }
 }
