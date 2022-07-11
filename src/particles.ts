@@ -55,9 +55,13 @@ class Parcicle {
       Object.assign(this, props);
       }
     render(ctx: CanvasRenderingContext2D) {
-      const { x, y, radius, color, strokeStyle } = this;
+      let { x, y, radius, color, strokeStyle } = this;
       ctx.save();
-      ctx.translate(x + Math.random() * 3, y + Math.random() * 3);
+      if (this.shakeEnable) {
+        x = x + Math.random() * 3;
+        y = y + Math.random() * 3;
+      }
+      ctx.translate(x, y);
       ctx.fillStyle = color;
       ctx.strokeStyle = strokeStyle;
       ctx.beginPath();
