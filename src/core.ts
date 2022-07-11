@@ -55,18 +55,20 @@ class Particle {
 
     render() {
         if (this.renderer.animateEnabled) {
-            requestAnimationFrame(this.handlerAnimation.bind(this))
+            requestAnimationFrame(this.handlerAnimation.bind(this, 0))
         } else {
             this.renderer.render(this.containerCtx);
         }
     }
-    private handlerAnimation(currentTimeStamp: number) {
-        if (currentTimeStamp - this.lastTimeStamp >= 100) {
+    private handlerAnimation(lastRenderTimeStamp: number, currentTimeStamp: number) {
+        const timeChunk = currentTimeStamp - lastRenderTimeStamp;
+        // if (timeChunk >= 100) {
+            console.log(`当前fps: ${1000 / (currentTimeStamp - lastRenderTimeStamp)}`)
             this.containerCtx.clearRect(0, 0, this.container.width, this.container.height)
-            this.lastTimeStamp = currentTimeStamp;
-            this.renderer.render(this.containerCtx);
-        }
-        requestAnimationFrame(this.handlerAnimation.bind(this));
+            this.renderer.render(this.containerCtx, timeChunk);
+            lastRenderTimeStamp = currentTimeStamp;
+        // }
+        requestAnimationFrame(this.handlerAnimation.bind(this, lastRenderTimeStamp));
     }
     
     

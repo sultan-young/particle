@@ -42,8 +42,10 @@ export abstract class Render {
                 const a = imgData[pointIndex + 3];
                 if (a > 0) {
                     this.particles.push(new Parcicle({
-                        x,
-                        y,
+                        finalX: x,
+                        finalY: y,
+                        x: Math.floor(Math.random() * canvas.width),
+                        y: Math.floor(Math.random() * canvas.height),
                         radius: this.radius,
                         shakeEnable: this.shakeEnable,
                         color: this.color || `rgba(${r}, ${g}, ${b}, ${a})`,
@@ -52,10 +54,14 @@ export abstract class Render {
             }
         };
         ctx.clearRect(0, 0, width, height); 
+        console.log(this.particles)
     }
     
-    render(ctx: CanvasRenderingContext2D) {
+    render(ctx: CanvasRenderingContext2D, timeChunk?: number) {
         this.particles.forEach(item => {
+            if (this.animateEnabled && timeChunk) {
+                item.update(timeChunk);
+            }
             item.render(ctx);
         });
     }
