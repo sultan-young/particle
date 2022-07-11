@@ -15,6 +15,8 @@ export abstract class Render {
     protected radius = 1;
     protected shakeEnable = false;
     protected color = '';
+    protected x = 0;
+    protected y = 0;
     protected particles : Array<Parcicle> = [];
     public animateEnabled = false;
 

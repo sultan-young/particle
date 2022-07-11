@@ -63,10 +63,10 @@ class Parcicle {
       }
       ctx.translate(x, y);
       ctx.fillStyle = color;
-      ctx.strokeStyle = strokeStyle;
       ctx.beginPath();
       ctx.arc(0, 0, radius, 0, 2 * Math.PI);
-      ctx.stroke();
+      // ctx.strokeStyle = strokeStyle;
+      // ctx.stroke();
       ctx.fill();
       ctx.restore();
       return this;
