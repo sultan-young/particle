@@ -8,6 +8,7 @@ interface IParcicle {
     radius ?: number;
     color ?: string;
     strokeStyle ?: string;
+    shakeEnable ?: boolean;
   }
   
 class Parcicle {
@@ -20,6 +21,7 @@ class Parcicle {
     radius !: number;
     color !: string;
     strokeStyle !: string;
+    shakeEnable = false;
   
     constructor(props: IParcicle) {
   
@@ -55,7 +57,7 @@ class Parcicle {
     render(ctx: CanvasRenderingContext2D) {
       const { x, y, radius, color, strokeStyle } = this;
       ctx.save();
-      ctx.translate(x, y);
+      ctx.translate(x + Math.random() * 3, y + Math.random() * 3);
       ctx.fillStyle = color;
       ctx.strokeStyle = strokeStyle;
       ctx.beginPath();
@@ -69,5 +71,4 @@ class Parcicle {
 
 export {
   Parcicle,
-  IParcicle,
 }

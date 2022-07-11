@@ -1,4 +1,4 @@
-import { Parcicle, IParcicle } from './particles';
+import { Parcicle } from './particles';
 
 interface IParticleSystem {
     container: HTMLCanvasElement,
@@ -7,22 +7,25 @@ interface IParticleSystem {
 }
 interface IOptions {
     skip: number;
+    shakeEnable: boolean;
 }
 
 class ParticleSystem {
     // 容器canvas
-    container!: HTMLCanvasElement;
+    private container!: HTMLCanvasElement;
     // 容器canvasCtx
-    containerCtx!: CanvasRenderingContext2D;
+    private containerCtx!: CanvasRenderingContext2D;
 
     // 离屏canvas
-    offScreenCanvas !: HTMLCanvasElement;
-    offScreenCanvasCtx !: CanvasRenderingContext2D;
+    private offScreenCanvas !: HTMLCanvasElement;
+    private offScreenCanvasCtx !: CanvasRenderingContext2D;
 
-    particles : Array<Parcicle> = [];
+    private particles : Array<Parcicle> = [];
 
-    text = 'Sultan';
-    skip = 5;
+    private text = 'Sultan';
+    private skip = 5;
+
+    private lastTimeStamp = 0;
 
     constructor(cons: IParticleSystem) {
         const { container, text, options } = cons;
@@ -30,10 +33,10 @@ class ParticleSystem {
         this.skip = options!.skip || 5;
         this.initContainerCanvas(container);
         this.initOffScreenCanvas();
-        this.initImageData();
+        this.initImageData(options!.shakeEnable);
     }
 
-    initContainerCanvas(canvas: HTMLCanvasElement) {
+    private initContainerCanvas(canvas: HTMLCanvasElement) {
         this.container = canvas;
         const ctx = canvas.getContext('2d');
         if (!ctx) {
@@ -42,7 +45,7 @@ class ParticleSystem {
         this.containerCtx = ctx;
     }
 
-    initOffScreenCanvas() {
+    private initOffScreenCanvas() {
         const canvas = document.createElement('canvas') as HTMLCanvasElement;
         // const canvas = document.getElementById('canvas') as HTMLCanvasElement;
         const ctx = canvas.getContext('2d');
@@ -55,7 +58,7 @@ class ParticleSystem {
         this.offScreenCanvasCtx = ctx;
     }
 
-    initImageData() {
+    private initImageData(shakeEnable: boolean) {
         const canvas = this.offScreenCanvas;
         const ctx = this.offScreenCanvasCtx;
         const width = canvas.width;
@@ -72,9 +75,10 @@ class ParticleSystem {
                 const pointIndex = (x + (y * width)) * 4 + 3;
                 if (imgData[pointIndex] > 0) {
                     this.particles.push(new Parcicle({
-                        x: x + Math.random() * 6 - 3,
-                        y: y + Math.random() * 6 - 3,
+                        x,
+                        y,
                         radius: 1,
+                        shakeEnable,
                         color: '#2EA9DF',
                     }))
                 }
@@ -85,12 +89,24 @@ class ParticleSystem {
 
     draw() {
         const ctx = this.containerCtx;
-        console.log(this.particles)
         this.particles.forEach(item => {
             item.render(ctx);
-        })
+        });
+        requestAnimationFrame
     }
-    
+    animateDraw() {
+        requestAnimationFrame(this.handlerAnimation.bind(this))
+        console.log(this.particles);
+        const ctx = this.containerCtx;
+    }
+    private handlerAnimation(currentTimeStamp: number) {
+        if (currentTimeStamp - this.lastTimeStamp >= 100) {
+            this.containerCtx.clearRect(0, 0, this.container.width, this.container.height)
+            this.lastTimeStamp = currentTimeStamp;
+            this.draw();
+        }
+        requestAnimationFrame(this.handlerAnimation.bind(this));
+    }
 }
 
 class Emiter {

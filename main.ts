@@ -13,7 +13,9 @@ if (canvas) {
         text: '测试',
         options: {
             skip: 3,
+            shakeEnable: true,
         }
     });
-    particleSystem.draw();
+    // particleSystem.draw();
+    particleSystem.animateDraw()
 }
