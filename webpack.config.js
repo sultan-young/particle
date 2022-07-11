@@ -4,7 +4,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = (env) => {
     const { mode } = env;
-    console.log('mode', mode);
     return {
         mode,
         entry: './main.ts',
@@ -24,7 +23,19 @@ module.exports = (env) => {
                             '@babel/preset-typescript',
                         ]
                     }
-                }
+                },
+                {
+                    test: /\.(jpe?g|png|gif)/,
+                    use: [
+                        {
+                          loader: 'file-loader',
+                          options: {
+                            name: '[name]-[sha256:hash:8]-[emoji].[ext]',
+                            outputPath: 'img',
+                          },
+                        },
+                      ],
+                },
             ]
         },
         plugins: [

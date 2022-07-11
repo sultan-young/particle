@@ -6,8 +6,12 @@ import { Parcicle } from "../particles";
 import { BaseBehaviour } from "./base";
 
 
-
+enum BehaviourEunm {
+    
+}
 export class SpreadBehaviour extends BaseBehaviour{
+    
+
     constructor() {
         super();
         this.init()
