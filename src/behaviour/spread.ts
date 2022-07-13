@@ -5,28 +5,25 @@
 import { Parcicle } from "../particles";
 import { BaseBehaviour } from "./base";
 
-
 enum BehaviourEunm {
-    toTop,
-    toBottom,
-    toLeft,
-    toRight,
-    toAround,
+  toTop,
+  toBottom,
+  toLeft,
+  toRight,
+  toAround,
 }
-export class SpreadBehaviour extends BaseBehaviour{
-    static BehaviourEunm = BehaviourEunm;
-    behaviourType = BehaviourEunm.toAround;
+export class SpreadBehaviour extends BaseBehaviour {
+  static BehaviourEunm = BehaviourEunm;
+  behaviourType = BehaviourEunm.toAround;
 
-    constructor(behaviourType: BehaviourEunm) {
-        super();
-        this.behaviourType = behaviourType;
-    }
-    update(particles: Parcicle[]): void {
-        particles.forEach(item => {
-            this.toTop();
-        });
-    }
-    toTop() {
-        
-    }
+  constructor(behaviourType: BehaviourEunm) {
+    super();
+    this.behaviourType = behaviourType;
+  }
+  update(particles: Parcicle[]): void {
+    particles.forEach((item) => {
+      this.toTop();
+    });
+  }
+  toTop() {}
 }
