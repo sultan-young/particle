@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack --config webpack.config.js --env mode=development",
     "dev": "webpack serve --open --env mode=development",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "lint-install": "hpinstall"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +25,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "file-loader": "^6.2.0",
     "gulp": "^3.9.1",
+    "happy-install": "^1.0.7",
     "html-webpack-plugin": "^5.5.0",
     "typescript": "^4.7.4",
     "url-loader": "^4.1.1",
